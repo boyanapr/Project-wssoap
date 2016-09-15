@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="Style.css" rel="stylesheet" />
+    <script src='http://code.jquery.com/jquery-1.11.2.js'></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#btnAddStudent').click(function () {
+                var students = {};
+                students.Names = $('#txtName').val();
+                students.FNumber = $('#txtFNumber').val();
+                students.Theme = $('#txtTheme').val();
+                students.Numbertheme = $('#txtNTheme').val();
+                students.Email = $('#txtEmail').val();
+
+                $.ajax({
+                    url: 'ThemesService.asmx/Checkout',
+                    method: 'post',
+                    contentType: 'application/json;charset=utf-8',
+                    data: '{stu:' + JSON.stringify(students) + '}',
+                    success: function () {
+                        getAllStudents();
+                    },
+                    error: function (err) {
+                        alert(err);
+                    }
+                });
+            });
+            function getAllStudents()
+            {
+                $.ajax({
+                    url: 'ThemesService.asmx/GetAllStudents',
+                    dataType: 'json',
+                    method: 'post',
+                    success: function (data) {
+                        var studentTable = $('#tblcheckout tbody');
+                        studentTable.empty();
+
+                        $(data).each(function (index, stu) {
+                            studentTable.append('<tr><td>' + stu.Names + '</td><td>' + stu.FNumber + '</td><td>'
+                            + stu.Theme + '</td><td>' + stu.Numbertheme + '</td><td>' + stu.Email + '</td></tr>');
+                        });
+                    },
+                    error: function (err) {
+                        alert(err);
+                    }
+                });
+            }
+        });
+
+    </script>
+</head>
+<body>
+    <table>
+        <tr>
+            <td>Names:</td>
+            <td><input id="txtName" type="text" /></td>
+        </tr>
+        <tr>
+            <td>FNumber:</td>
+            <td><input id="txtFNumber" type="number" /></td>
+        </tr>
+        <tr>
+            <td>Theme:</td>
+            <td><input id="txtTheme" type="text" /></td>
+        </tr>
+        <tr>
+            <td>NumberTheme:</td>
+            <td><input id="txtNTheme" type="number" /></td>
+        </tr>
+        <tr>
+            <td>E-mail:</td>
+            <td><input id="txtEmail" type="email" /></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="button" id="btnAddStudent" value="Add Student"/>
+            </td>
+        </tr>
+    </table>
+    <br />
+    <table id="tblcheckout">
+        <thead>
+            <tr>
+                <th>Names</th>
+                <th>FNumber</th>
+                <th>Theme</th>
+                <th>Ntheme</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+       <tbody></tbody>
+       </table>
+</body>
+</html>

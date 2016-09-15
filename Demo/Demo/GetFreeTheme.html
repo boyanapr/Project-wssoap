@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="Scripts/angular.min.js"></script>
+    <script src="Scripts/Script.js"></script>
+    <link href="Style.css" rel="stylesheet" />
+    
+</head>
+<body ng-app ="myModule">
+    <div ng-controller="myController">
+        <table>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>NumberTheme</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="theme in themes">
+                    <td>{{theme.id}}</td>
+                    <td>{{theme.Name}}</td>
+                    <td>{{theme.Number}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
